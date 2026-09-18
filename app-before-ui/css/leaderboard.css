@@ -1,0 +1,28 @@
+/* ============================================================
+   Leaderboard page (owned by the Leaderboard agent).
+   The row, medal, and gator styles already live in styles.css.
+   This file only adds the little bits this page needs.
+   ============================================================ */
+
+/* Content column */
+.lb-page { max-width: 760px; }
+
+/* "Resets on the 1st" line under the switch */
+.lb-reset { margin: 8px 0 12px; }
+
+/* "Score = average points per active member" */
+.lb-note { margin-bottom: 8px; }
+
+/* Houses that don't have 10 active members yet */
+.lb-waiting { margin-top: 14px; line-height: 1.5; }
+
+/* Error card with the retry button */
+.lb-error { text-align: center; }
+.lb-error p { margin: 0 0 4px; color: var(--text); }
+
+/* While the gator runs, clicks on the page do nothing */
+.lb-busy .lb-page { pointer-events: none; }
+
+/* Keep the gator on top of the gold "me" row too */
+.lb-page .row .gator,
+.lb-page .row .chomp-word { pointer-events: none; }

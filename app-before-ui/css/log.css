@@ -1,0 +1,94 @@
+/* ============================================================
+   Log page styles (owned by the Log agent).
+   Only CSS variables from styles.css, no hard-coded colors.
+   ============================================================ */
+
+/* "Today" row: title left, points right */
+.log-today-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+
+/* Note under the Peak Pulse checkbox */
+.log-note { margin: -6px 0 6px 30px; }
+.log-note-plain { margin-top: 6px; }
+
+/* Multiplier explanation inside the preview box */
+.log-why { font-weight: 400; margin-top: 4px; }
+
+.log-pill-gap { margin-top: 12px; }
+.log-pill-row { margin: 10px 0; min-height: 4px; }
+.log-wrap { flex-wrap: wrap; }
+
+/* Photo drop zones: light up while dragging a file over them */
+.log-drop.log-drag { border-color: var(--orange); background: var(--card-2); }
+.log-photo-status { margin-top: 6px; min-height: 18px; }
+.log-photo-status.log-bad { color: var(--red); font-weight: 600; }
+
+/* Today's food list with a remove button per item */
+.log-food-list { list-style: none; padding: 0; margin: 6px 0 0; }
+.log-food-list li {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px;
+}
+.log-food-list li:last-child { border-bottom: none; }
+.log-x {
+  border: 1px solid var(--line); background: var(--card-2); color: var(--muted);
+  width: 28px; height: 28px; border-radius: 8px; cursor: pointer; flex-shrink: 0;
+  font-size: 12px; line-height: 1;
+}
+.log-x:hover { color: var(--red); border-color: var(--red); }
+.log-x:disabled { opacity: .5; cursor: default; }
+
+/* Meditation overlay content */
+.log-med { text-align: center; }
+.log-med-quit { margin-top: 20px; }
+
+.log-page .btn:disabled { opacity: .6; cursor: default; }
+
+/* ---------- AI meal tracker (Eating > Add food) ---------- */
+.log-ai { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.log-ai h4 { margin-top: 4px; }
+.log-ai-row { display: flex; gap: 8px; align-items: flex-start; }
+.log-ai-row input { flex: 1; }
+.log-ai-photo { flex-shrink: 0; padding: 9px 12px; line-height: 1; }
+.log-ai-photo.log-ai-has { border-color: var(--orange); }
+.log-ai-file { font-size: 13px; margin-bottom: 4px; }
+.log-ai-or { font-size: 13px; margin-bottom: 6px; }
+.log-ai .btn-primary { margin-top: 4px; }
+
+/* The result card */
+.log-ai-result {
+  margin-top: 12px; padding: 12px; border-radius: 12px;
+  background: var(--card-2); border: 1px solid var(--line);
+}
+.log-ai-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.log-ai-items { list-style: none; padding: 0; margin: 8px 0; font-size: 14px; }
+.log-ai-items li { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; border-bottom: 1px solid var(--line); }
+.log-ai-items li:last-child { border-bottom: none; }
+.log-ai-note { font-size: 13px; margin: 6px 0 4px; }
+.log-ai-conf.log-ai-high { color: var(--green); }
+.log-ai-conf.log-ai-medium { color: var(--accent-text); }
+.log-ai-conf.log-ai-low { color: var(--red); }
+.log-ai-result .inline .btn { flex: 1; width: auto; margin-top: 8px; }
+
+/* ---------- Delete photo buttons ---------- */
+.log-thumb-wrap { position: relative; }
+.log-photo-x {
+  position: absolute; top: 16px; right: 8px; border: none; cursor: pointer;
+  background: rgba(18,18,18,.85); color: #fff; padding: 6px 10px; font-size: 12px;
+  letter-spacing: 1px; font-family: inherit;
+}
+.log-photo-x:hover { background: #ff4d4d; }
+.photo-grid .log-jphoto-x {
+  position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border: none;
+  background: rgba(18,18,18,.85); color: #fff; font-size: 11px; cursor: pointer; padding: 0;
+}
+.photo-grid .log-jphoto-x:hover { background: #ff4d4d; }
+
+/* USDA vs AI source tags on each AI item */
+.log-ai-grams { font-size: 12px; }
+.log-ai-src {
+  display: inline-block; font-size: 10px; font-weight: 700; line-height: 1;
+  padding: 2px 4px; border-radius: 2px; border: 1px solid var(--line);
+  color: var(--muted); vertical-align: middle; white-space: nowrap;
+}
+.log-ai-src.log-ai-usda { color: var(--green); border-color: var(--green); cursor: help; }
+.log-ai-usda-line { font-size: 12px; margin: 2px 0 4px; }

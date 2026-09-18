@@ -1,0 +1,130 @@
+/* ---------- RSVP page (owned by the RSVP agent) ---------- */
+/* Tokens only. Layout: boost callout, featured next run, list of later runs. */
+
+.rsvp-page { max-width: 880px; }
+
+/* Shared bits */
+.rsvp-trunc { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rsvp-dot { width: 3px; height: 3px; border-radius: var(--radius-full); background: var(--border-strong); flex-shrink: 0; }
+
+/* ---------- Points boost (Trophy points-boost look) ---------- */
+.rsvp-boost {
+  display: flex; align-items: center; gap: 16px;
+  padding: 12px 16px; margin-bottom: 16px;
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-ring);
+  border-radius: var(--radius);
+}
+.rsvp-boost-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--brand); color: var(--on-ink);
+}
+.rsvp-boost-icon .icon { fill: currentColor; }
+.rsvp-boost-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.rsvp-boost-title { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--text); }
+.rsvp-boost-mult {
+  display: inline-flex; align-items: center; height: 20px; padding: 0 8px;
+  border-radius: var(--radius-full); background: var(--surface);
+  color: var(--brand); font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums;
+}
+.rsvp-boost-sub { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-2); min-width: 0; }
+.rsvp-boost-sub b { color: var(--text); font-weight: 600; }
+.rsvp-boost-count {
+  display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0;
+  font-size: 13px; font-weight: 700; color: var(--brand);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Calendar tile ---------- */
+.rsvp-date {
+  width: 48px; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 4px 0 6px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  line-height: 1;
+}
+.rsvp-date-wd {
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-3);
+  margin-top: 2px;
+}
+.rsvp-date-day { font-size: 20px; font-weight: 800; color: var(--text); font-variant-numeric: tabular-nums; margin-top: 4px; }
+.rsvp-date-lg { width: 64px; padding: 8px 0; }
+.rsvp-date-lg .rsvp-date-day { font-size: 32px; letter-spacing: -0.02em; }
+.rsvp-date-mo { font-size: 12px; font-weight: 600; color: var(--text-3); margin-top: 4px; }
+
+/* ---------- Title, meta, description ---------- */
+.rsvp-main { flex: 1; min-width: 0; }
+.rsvp-title { margin: 0; font-size: 16px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rsvp-title-lg { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin: 4px 0 8px; white-space: normal; }
+.rsvp-title-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.rsvp-meta { display: flex; align-items: center; gap: 16px; margin-top: 4px; font-size: 13px; color: var(--text-2); min-width: 0; }
+.rsvp-meta > span { display: inline-flex; align-items: center; gap: 4px; }
+.rsvp-meta .icon { color: var(--text-3); }
+.rsvp-desc { margin: 12px 0 0; font-size: 14px; line-height: 1.5; color: var(--text-2); max-width: 560px; }
+.rsvp-label {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-3);
+}
+.rsvp-label .badge { letter-spacing: 0; text-transform: none; }
+.rsvp-soon { flex-shrink: 0; }
+
+/* ---------- People: avatar stack + count ---------- */
+.rsvp-people { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.rsvp-people .avatar-stack { margin: 0; }
+.rsvp-count { font-size: 13px; color: var(--text-3); white-space: nowrap; }
+.rsvp-count b { color: var(--text); font-weight: 700; font-variant-numeric: tabular-nums; }
+.rsvp-more { background: var(--surface-2); color: var(--text-2); }
+
+/* ---------- RSVP button ---------- */
+.rsvp-btn { min-width: 96px; }
+.rsvp-btn.btn-sm { min-width: 80px; }
+.rsvp-btn[disabled] { opacity: .7; cursor: wait; }
+
+/* ---------- "See who's going" (quiet expandable) ---------- */
+.rsvp-who summary {
+  display: inline-flex; align-items: center; gap: 4px;
+  list-style: none; margin-top: 8px;
+  font-size: 13px; font-weight: 600; color: var(--text-3);
+  border-radius: 4px;
+  transition: color var(--fast);
+}
+.rsvp-who summary::-webkit-details-marker { display: none; }
+.rsvp-who summary:hover { color: var(--text); }
+.rsvp-who summary .icon { transition: transform var(--fast); }
+.rsvp-who[open] summary .icon { transform: rotate(180deg); }
+.rsvp-who p { margin: 4px 0 0; font-size: 13px; color: var(--text-2); overflow-wrap: anywhere; }
+
+/* ---------- Featured next run ---------- */
+.rsvp-feature { padding: 24px; margin-bottom: 32px; }
+.rsvp-feature-top { display: flex; gap: 20px; align-items: flex-start; }
+.rsvp-feature-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);
+}
+.rsvp-feature .rsvp-who { margin-top: 4px; }
+
+/* ---------- Later runs: a list with dividers ---------- */
+.rsvp-section { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+.rsvp-section h4 { margin: 0; }
+.rsvp-section-count { font-size: 12px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+.rsvp-list { padding: 0; overflow: hidden; }
+.rsvp-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 16px 20px;
+  transition: background var(--fast);
+}
+.rsvp-row + .rsvp-row { border-top: 1px solid var(--border); }
+.rsvp-row:hover { background: var(--bg); }
+.rsvp-side { display: flex; align-items: center; gap: 16px; flex-shrink: 0; align-self: center; }
+
+/* ---------- Narrow screens ---------- */
+@media (max-width: 720px) {
+  .rsvp-boost { flex-wrap: wrap; }
+  .rsvp-boost-sub { flex-wrap: wrap; row-gap: 0; }
+  .rsvp-boost-count { width: 100%; padding-left: 56px; }
+  .rsvp-row { flex-wrap: wrap; }
+  .rsvp-side { width: 100%; justify-content: space-between; padding-left: 64px; }
+  .rsvp-feature-foot { flex-wrap: wrap; }
+}

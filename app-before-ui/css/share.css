@@ -1,0 +1,58 @@
+/* ============================================================
+   Share to your story: the leaderboard button + the full-screen modal.
+   Peak Pulse look: white panel, square corners, black buttons.
+   ============================================================ */
+
+/* The "Share to your story" button under the greeting */
+.lb-share-btn { width: auto; margin: 0 0 16px; padding: 12px 22px; }
+
+/* Full-screen dark backdrop */
+.share-modal {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, 0.72);
+  padding: 16px;
+}
+
+/* White square panel */
+.share-panel {
+  background: #ffffff; color: #121212;
+  border-radius: 0;
+  width: min(420px, 100%);
+  max-height: calc(100vh - 32px);
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 18px;
+  font-family: "Assistant", -apple-system, sans-serif;
+}
+.share-title { font-size: 20px; font-weight: 800; letter-spacing: .5px; }
+
+/* The preview keeps the 9:16 story shape and shrinks to fit the screen */
+.share-frame {
+  display: flex; align-items: center; justify-content: center;
+  background: #121212;
+  aspect-ratio: 9 / 16;
+  height: min(calc(100vh - 200px), 680px);
+  max-width: 100%;
+  margin: 0 auto;
+}
+.share-preview { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
+.share-loading { color: #ffffff; font-size: 15px; padding: 20px; text-align: center; }
+
+.share-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.share-actions .share-go { flex: 1 1 auto; width: auto; margin: 0; background: #121212; color: #ffffff; }
+.share-actions .share-close { background: #ffffff; color: #121212; border: 1px solid #121212; }
+.share-dl { color: #121212; font-weight: 700; text-decoration: underline; letter-spacing: 1px; }
+.share-dl[aria-disabled="true"] { opacity: .4; pointer-events: none; }
+
+/* Selfie button + caption box in the share window */
+.share-selfie { display: block; text-align: center; width: 100%; margin-top: 10px; cursor: pointer; }
+.share-caption { display: flex; align-items: center; gap: 10px; margin-top: 10px; padding: 10px; background: #f3f3f3; }
+.share-caption-text { flex: 1; font-size: 13px; color: #121212; line-height: 1.4; }
+.share-hint { text-align: center; margin-top: 8px; font-size: 12px; }
+
+/* Keep the share window on screen, even on short laptop screens */
+.share-panel { max-height: 94vh; overflow-y: auto; }
+.share-frame img.share-preview { max-height: 62vh; width: auto; margin: 0 auto; display: block; }
+
+.share-sub { margin: -4px 0 10px; }
+.share-selfie.btn-primary { color: #ffffff; }

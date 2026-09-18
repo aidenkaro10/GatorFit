@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GatorFit</title>
+  <link rel="icon" href="https://www.peakpulseclub.com/cdn/shop/files/sun_favicon.png?crop=center&height=32&v=1750684565&width=32" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap" />
+  <link rel="stylesheet" href="styles.css?v=11" />
+  <link rel="stylesheet" href="css/rsvp.css?v=11" />
+  <link rel="stylesheet" href="css/leaderboard.css?v=11" />
+  <link rel="stylesheet" href="css/partner.css?v=11" />
+  <link rel="stylesheet" href="css/log.css?v=11" />
+  <link rel="stylesheet" href="css/share.css?v=11" />
+  <!-- The app is light mode only -->
+  <script>document.documentElement.dataset.theme = "light";</script>
+</head>
+<body>
+  <div id="app">
+    <!-- LEFT: sidebar with logo, your stats, tabs, and settings -->
+    <aside id="sidebar">
+      <div class="logo-row">
+        <div class="logo brand-logo"><img src="https://www.peakpulseclub.com/cdn/shop/files/white_text_peak_pulse_logo_with_sun.png?v=1750709848&width=600" alt="Peak Pulse" onerror="this.parentNode.classList.add('no-img')" /><span class="logo-fallback"><span class="sun">☀</span> PEAK PULSE</span></div>
+        <span id="demoPill" hidden></span>
+      </div>
+
+      <!-- Your name, points, and rank get drawn here by js/app.js -->
+      <div id="header"></div>
+
+      <nav id="tabbar">
+        <button data-action="app-tab" data-tab="rsvp"><span>📅</span>RSVP</button>
+        <button data-action="app-tab" data-tab="leaderboard"><span>🏆</span>Leaderboard</button>
+        <button data-action="app-tab" data-tab="partner"><span>🤝</span>Find a Partner</button>
+        <button data-action="app-tab" data-tab="log"><span>➕</span>Log</button>
+      </nav>
+
+      <div class="side-bottom">
+        <button class="btn" data-action="app-signout">Sign out</button>
+      </div>
+    </aside>
+
+    <!-- RIGHT: the current tab's content gets drawn here by the page files -->
+    <main id="screen"></main>
+  </div>
+
+  <!-- Sign in + onboarding screen -->
+  <div id="onboarding" class="overlay" hidden></div>
+
+  <!-- Meditation lock screen (used by the Log page) -->
+  <div id="medOverlay" class="overlay" hidden></div>
+
+  <!-- Little pop-up messages -->
+  <div id="toast"></div>
+
+  <!-- 1. Supabase library (if it fails to load, the app runs in DEMO MODE) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- 2. Config made by scripts/make-config.mjs. If it's missing, DEMO MODE. -->
+  <script src="config.js" onerror="window.PP_CONFIG = window.PP_CONFIG || null"></script>
+  <!-- 3. Shared code, in order -->
+  <script src="js/points.js?v=11"></script>
+  <script src="js/mock-data.js?v=11"></script>
+  <script src="js/ui.js?v=11"></script>
+  <script src="js/db.js?v=11"></script>
+  <!-- 4. The 4 pages -->
+  <script src="js/ai.js?v=11"></script>
+  <script src="js/share.js?v=11"></script>
+  <script src="js/pages/rsvp.js?v=11"></script>
+  <script src="js/pages/leaderboard.js?v=11"></script>
+  <script src="js/pages/partner.js?v=11"></script>
+  <script src="js/pages/log.js?v=11"></script>
+  <!-- 5. Boot the app -->
+  <script src="js/app.js?v=11"></script>
+</body>
+</html>

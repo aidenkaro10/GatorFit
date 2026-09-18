@@ -1,0 +1,15 @@
+/* ---------- RSVP page (owned by the RSVP agent) ---------- */
+
+.rsvp-card { display: flex; flex-direction: column; }
+.rsvp-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.rsvp-soon { background: #ff6a00; color: #fff; }
+.rsvp-title { margin: 8px 0 2px; }
+.rsvp-desc { margin: 8px 0 0; line-height: 1.5; }
+
+/* The shared stack rule paints every face with --bg, so put the gold back on "me" */
+.rsvp-card .avatar-stack .avatar.me { background: #ff6a00; color: #fff; }
+.rsvp-card .avatar-stack .rsvp-more { color: var(--muted); font-size: 11px; }
+
+.rsvp-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+.rsvp-foot .btn[disabled] { opacity: .7; cursor: wait; }
+.rsvp-card details p { color: var(--muted); overflow-wrap: anywhere; }

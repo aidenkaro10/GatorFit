@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Peak Pulse</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Set light/dark before the page draws, so it doesn't flash the wrong color -->
+  <script>
+    try {
+      const saved = localStorage.getItem("peakpulse-theme");
+      const system = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.dataset.theme = saved || system;
+    } catch (e) {
+      document.documentElement.dataset.theme = "dark";
+    }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <!-- LEFT: sidebar with logo, your stats, tabs, and settings -->
+    <aside id="sidebar">
+      <div class="logo"><span class="sun">☀</span> PEAK PULSE</div>
+
+      <!-- Your name, points, and rank get drawn here by app.js -->
+      <div id="header"></div>
+
+      <nav id="tabbar">
+        <button data-action="tab" data-tab="rsvp"><span>📅</span>RSVP</button>
+        <button data-action="tab" data-tab="leaderboard"><span>🏆</span>Leaderboard</button>
+        <button data-action="tab" data-tab="partner"><span>🤝</span>Find a Partner</button>
+        <button data-action="tab" data-tab="log"><span>➕</span>Log</button>
+      </nav>
+
+      <div class="side-bottom">
+        <button class="btn" data-action="theme" id="themeBtn">☀️ Light</button>
+        <button class="btn" data-action="reset" title="Wipe everything and start over">↺ Reset</button>
+      </div>
+    </aside>
+
+    <!-- RIGHT: the current tab's content gets drawn here by app.js -->
+    <main id="screen"></main>
+  </div>
+
+  <!-- Sign-up screen (shows until you create a profile) -->
+  <div id="onboarding" class="overlay" hidden></div>
+
+  <!-- Meditation lock screen -->
+  <div id="medOverlay" class="overlay" hidden></div>
+
+  <!-- Little pop-up messages -->
+  <div id="toast"></div>
+
+  <!-- data.js must load first because app.js uses its fake data -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

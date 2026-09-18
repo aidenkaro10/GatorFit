@@ -1,0 +1,212 @@
+/* ============================================================
+   Leaderboard page (owned by the Leaderboard agent).
+   Podium (Trophy leaderboard-podium) + rankings list (Trophy
+   leaderboard-rankings), ported to our tokens.
+   The gator keyframes live in styles.css. Don't touch them here.
+   ============================================================ */
+
+/* Content column */
+.lb-page { max-width: 760px; }
+
+/* Share button under the header (only after a fresh workout) */
+.lb-share-btn { margin: -8px 0 24px; }
+
+/* ---------- Tabs + reset line ---------- */
+.lb-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 24px;
+}
+.lb-bar .seg { margin-bottom: 0; }
+.lb-reset {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 13px; color: var(--text-3); font-variant-numeric: tabular-nums;
+}
+
+/* "Score is average points per active member" */
+.lb-note { font-size: 13px; color: var(--text-3); margin: -12px 0 16px; }
+
+/* "You" tag after your name */
+.lb-you {
+  display: inline-flex; align-items: center; height: 18px; padding: 0 6px; margin-left: 4px;
+  border-radius: 4px; background: var(--surface); color: var(--brand);
+  border: 1px solid var(--brand-ring);
+  font-size: 11px; font-weight: 700; vertical-align: 1px;
+}
+
+/* ============================================================
+   PODIUM: 2nd left, 1st center (tallest), 3rd right
+   ============================================================ */
+.lb-podium {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end; gap: 12px;
+  max-width: 560px; margin: 0 auto 32px;
+  border-bottom: 1px solid var(--border-strong); /* the floor the podium stands on */
+}
+/* Only 1 or 2 people on the board: keep the spots centered */
+.lb-podium:has(> .lb-spot:only-child) { grid-template-columns: minmax(0, 180px); justify-content: center; }
+.lb-podium:has(> .lb-spot:nth-child(2):last-child) { grid-template-columns: repeat(2, minmax(0, 180px)); justify-content: center; }
+
+.lb-spot {
+  --medal: var(--silver);
+  display: flex; flex-direction: column; align-items: center; min-width: 0;
+  text-align: center;
+}
+.lb-spot.p1 { --medal: var(--gold); }
+.lb-spot.p2 { --medal: var(--silver); }
+.lb-spot.p3 { --medal: var(--bronze); }
+
+.lb-spot-head { display: flex; flex-direction: column; align-items: center; margin-bottom: 8px; }
+.lb-crown { color: var(--gold); line-height: 0; margin-bottom: 4px; }
+.lb-crown .icon { fill: color-mix(in srgb, var(--gold) 35%, transparent); }
+
+.lb-spot-avatar { position: relative; }
+.lb-spot .avatar-lg {
+  width: 56px; height: 56px; font-size: 18px;
+  box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--medal);
+}
+.lb-spot.p1 .avatar-lg { width: 72px; height: 72px; font-size: 22px; }
+/* Small place number on the avatar corner */
+.lb-spot-badge {
+  position: absolute; right: -4px; bottom: -4px;
+  width: 22px; height: 22px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--medal); color: var(--on-ink);
+  border: 2px solid var(--surface);
+  font-size: 11px; font-weight: 800; font-variant-numeric: tabular-nums;
+}
+
+.lb-spot-name {
+  max-width: 100%; margin-top: 4px;
+  font-size: 14px; font-weight: 700; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.lb-spot-sub {
+  max-width: 100%; font-size: 12px; color: var(--text-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* The podium block itself */
+.lb-spot-block {
+  width: 100%; margin-top: 12px;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  padding-top: 16px;
+  background: color-mix(in srgb, var(--medal) 14%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--medal) 30%, var(--surface));
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.lb-spot.p1 .lb-spot-block { height: 136px; }
+.lb-spot.p2 .lb-spot-block { height: 104px; }
+.lb-spot.p3 .lb-spot-block { height: 84px; }
+
+.lb-spot-pts {
+  font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -0.02em;
+  color: var(--text); font-variant-numeric: tabular-nums;
+}
+.lb-spot.p1 .lb-spot-pts { font-size: 40px; }
+.lb-spot-unit { margin-top: 4px; font-size: 12px; color: var(--text-3); font-weight: 600; }
+
+/* You on the podium: brand name + number, medal stays */
+.lb-spot.me .lb-spot-name,
+.lb-spot.me .lb-spot-pts { color: var(--brand); }
+.lb-spot.jumped { animation: jumped .7s ease-out; }
+
+/* ============================================================
+   RANKINGS LIST: tight rows, dividers, not cards
+   ============================================================ */
+.lb-list-head {
+  display: flex; justify-content: space-between;
+  padding: 0 16px 8px;
+  font-size: 12px; font-weight: 700; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.lb-rank-list {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+/* Override the shared card-style .row for this list */
+.lb-rank-list .row {
+  min-height: 52px; gap: 12px;
+  padding: 8px 16px; margin: 0;
+  background: var(--surface);
+  border: none; border-radius: 0; box-shadow: none;
+  border-top: 1px solid var(--border);
+  overflow: visible; /* let the big gator spill over neighbors; the list clips the sides */
+  transition: background var(--fast);
+}
+.lb-rank-list .row:first-child { border-top: none; }
+.lb-rank-list .row:hover { background: var(--surface-2); }
+
+.lb-rank-list .row .rank {
+  width: 28px; text-align: left;
+  font-size: 13px; font-weight: 700; color: var(--text-3);
+}
+.lb-rank-list .row .avatar { width: 32px; height: 32px; font-size: 12px; }
+.lb-rank-list .row .name { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.3; }
+.lb-rank-list .row .sub { font-size: 12px; color: var(--text-3); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lb-rank-list .row .pts { font-size: 16px; font-weight: 800; color: var(--text); text-align: right; min-width: 40px; }
+
+/* You: soft brand fill, brand left edge, brand name. Not a full orange block. */
+.lb-rank-list .row.me {
+  background: var(--brand-soft);
+  box-shadow: inset 3px 0 0 var(--brand);
+}
+.lb-rank-list .row.me .name,
+.lb-rank-list .row.me .pts,
+.lb-rank-list .row.me .rank { color: var(--brand); }
+
+/* The chomped row sits above its neighbors so the gator isn't covered */
+.lb-rank-list .row.chomped { z-index: 2; }
+.lb-rank-list .row.jumped { z-index: 1; }
+
+/* ---------- Greek: nobody ranked yet ---------- */
+.lb-none {
+  padding: 16px; margin-bottom: 24px;
+  border: 1px dashed var(--border-strong); border-radius: var(--radius);
+  font-size: 14px; color: var(--text-2);
+}
+
+/* ---------- Greek: houses that don't have 10 active members yet ---------- */
+.lb-waiting { margin-top: 32px; }
+.lb-waiting-head {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 0 0 8px; margin-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px; color: var(--text-3);
+}
+.lb-waiting-head span:first-child {
+  font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+}
+.lb-wait-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) 120px 40px;
+  align-items: center; gap: 12px;
+  height: 36px; font-size: 13px; color: var(--text-2);
+}
+.lb-wait-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lb-wait-bar { height: 4px; border-radius: var(--radius-full); background: var(--surface-2); overflow: hidden; }
+.lb-wait-bar > div { height: 100%; background: var(--border-strong); border-radius: var(--radius-full); }
+.lb-wait-count { text-align: right; color: var(--text-3); font-variant-numeric: tabular-nums; }
+.lb-wait-row.me .lb-wait-name { color: var(--brand); font-weight: 600; }
+.lb-wait-row.me .lb-wait-bar > div { background: var(--brand); }
+
+/* ---------- Error ---------- */
+.lb-error { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+
+/* While the gator runs, clicks on the page do nothing */
+.lb-busy .lb-page { pointer-events: none; }
+.lb-page .row .gator,
+.lb-page .row .chomp-word { pointer-events: none; }
+
+/* ---------- Small screens ---------- */
+@media (max-width: 560px) {
+  .lb-podium { gap: 8px; }
+  .lb-spot .avatar-lg { width: 44px; height: 44px; font-size: 15px; }
+  .lb-spot.p1 .avatar-lg { width: 56px; height: 56px; font-size: 18px; }
+  .lb-spot-pts { font-size: 24px; }
+  .lb-spot.p1 .lb-spot-pts { font-size: 32px; }
+  .lb-wait-row { grid-template-columns: minmax(0, 1fr) 72px 40px; }
+}

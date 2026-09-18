@@ -1,0 +1,11 @@
+{
+  "name": "peak-pulse",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "config": "node --env-file-if-exists=.env scripts/make-config.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.127.0"
+  }
+}

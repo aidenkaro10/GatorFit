@@ -1,0 +1,12 @@
+# Never upload these to Vercel. Keys go in Vercel's Environment Variables instead.
+.env
+app/config.js
+node_modules
+app-mvp-backup
+prompts
+supabase
+notes.md
+features.md
+app-before-ui
+PRESENTATION_PROMPT.md
+HOW_THE_AI_WORKS.md

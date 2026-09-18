@@ -1,0 +1,10 @@
+.env
+app/config.js
+node_modules/
+.vercel/
+.vercel
+
+# Local-only files
+**/config.js
+.DS_Store
+**/.vercel
