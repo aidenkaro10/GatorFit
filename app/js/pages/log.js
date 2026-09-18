@@ -266,7 +266,7 @@ PP.pages = PP.pages || {};
           <span class="log-drop-sub">Drop it here or tap to take one</span>
           ${input}
         </label>`;
-    const cls = photo.status === "bad" ? "log-bad" : photo.status === "ok" ? "log-ok" : "";
+    const cls = photo.status === "bad" ? "log-bad" : photo.status === "ok" && photo.checked ? "log-ok" : "";
     return `${zone}<div id="logWPhotoStatus" class="log-photo-status ${cls}">${photoStatusText()}</div>`;
   }
 
@@ -685,7 +685,7 @@ PP.pages = PP.pages || {};
     if (r && r.meal) {
       const m = r.meal;
       const conf = ["high", "medium", "low"].includes(m.confidence) ? m.confidence : "low";
-      const confCls = conf === "high" ? "badge-success" : conf === "medium" ? "badge-brand" : "badge-muted";
+      const confCls = conf === "high" ? "badge-success" : "badge-muted";
       const n = (v) => (v == null || v === "" ? "" : esc(v));
       const rows = (m.items || [])
         .map((it) => {
@@ -695,7 +695,7 @@ PP.pages = PP.pages || {};
             : `<span class="badge badge-muted log-ai-src log-ai-est">AI est.</span>`;
           return `
             <tr>
-              <td class="log-ai-name"><span>${esc(it.name)}</span>${tag}</td>
+              <td><div class="log-ai-name"><span>${esc(it.name)}</span>${tag}</div></td>
               <td class="num">${it.grams ? `${n(it.grams)}` : "-"}</td>
               <td class="num">${n(it.protein_g)}</td>
               <td class="num">${n(it.carbs_g)}</td>

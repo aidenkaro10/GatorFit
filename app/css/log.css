@@ -3,92 +3,324 @@
    Only CSS variables from styles.css, no hard-coded colors.
    ============================================================ */
 
-/* "Today" row: title left, points right */
-.log-today-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.log-page .btn:disabled { opacity: .45; cursor: not-allowed; }
+/* Workout tab is one focused column: keep the stat strip the same width as the form */
+.log-narrow { max-width: 760px; }
+.log-page:has(.log-wcard) { max-width: 760px; }
 
-/* Note under the Peak Pulse checkbox */
-.log-note { margin: -6px 0 6px 30px; }
-.log-note-plain { margin-top: 6px; }
 
-/* Multiplier explanation inside the preview box */
-.log-why { font-weight: 400; margin-top: 4px; }
-
-.log-pill-gap { margin-top: 12px; }
-.log-pill-row { margin: 10px 0; min-height: 4px; }
-.log-wrap { flex-wrap: wrap; }
-
-/* Photo drop zones: light up while dragging a file over them */
-.log-drop.log-drag { border-color: var(--orange); background: var(--card-2); }
-.log-photo-status { margin-top: 6px; min-height: 18px; }
-.log-photo-status.log-bad { color: var(--red); font-weight: 600; }
-
-/* Today's food list with a remove button per item */
-.log-food-list { list-style: none; padding: 0; margin: 6px 0 0; }
-.log-food-list li {
-  display: flex; align-items: center; justify-content: space-between; gap: 10px;
-  padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px;
+/* ---------- TODAY: Whoop-style stat strip ---------- */
+.log-today { padding: 0; overflow: hidden; }
+.log-strip {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  align-items: stretch;
 }
-.log-food-list li:last-child { border-bottom: none; }
-.log-x {
-  border: 1px solid var(--line); background: var(--card-2); color: var(--muted);
-  width: 28px; height: 28px; border-radius: 8px; cursor: pointer; flex-shrink: 0;
-  font-size: 12px; line-height: 1;
+.log-stat, .log-pts { padding: 16px 20px; }
+.log-stat + .log-stat, .log-pts { border-left: 1px solid var(--border); }
+.log-stat-label {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: .06em;
 }
-.log-x:hover { color: var(--red); border-color: var(--red); }
-.log-x:disabled { opacity: .5; cursor: default; }
-
-/* Meditation overlay content */
-.log-med { text-align: center; }
-.log-med-quit { margin-top: 20px; }
-
-.log-page .btn:disabled { opacity: .6; cursor: default; }
-
-/* ---------- AI meal tracker (Eating > Add food) ---------- */
-.log-ai { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
-.log-ai h4 { margin-top: 4px; }
-.log-ai-row { display: flex; gap: 8px; align-items: flex-start; }
-.log-ai-row input { flex: 1; }
-.log-ai-photo { flex-shrink: 0; padding: 9px 12px; line-height: 1; }
-.log-ai-photo.log-ai-has { border-color: var(--orange); }
-.log-ai-file { font-size: 13px; margin-bottom: 4px; }
-.log-ai-or { font-size: 13px; margin-bottom: 6px; }
-.log-ai .btn-primary { margin-top: 4px; }
-
-/* The result card */
-.log-ai-result {
-  margin-top: 12px; padding: 12px; border-radius: 12px;
-  background: var(--card-2); border: 1px solid var(--line);
+.log-stat-label .icon { color: var(--text-3); }
+.log-stat.done .log-stat-label .icon { color: var(--brand); }
+.log-stat-value {
+  display: flex; align-items: center; gap: 8px; margin-top: 8px; min-height: 32px;
+  font-variant-numeric: tabular-nums;
 }
-.log-ai-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
-.log-ai-items { list-style: none; padding: 0; margin: 8px 0; font-size: 14px; }
-.log-ai-items li { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; border-bottom: 1px solid var(--line); }
-.log-ai-items li:last-child { border-bottom: none; }
-.log-ai-note { font-size: 13px; margin: 6px 0 4px; }
-.log-ai-conf.log-ai-high { color: var(--green); }
-.log-ai-conf.log-ai-medium { color: var(--accent-text); }
-.log-ai-conf.log-ai-low { color: var(--red); }
-.log-ai-result .inline .btn { flex: 1; width: auto; margin-top: 8px; }
+.log-stat-value b { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; color: var(--text); }
+.log-stat-value .log-of { font-size: 16px; font-weight: 700; color: var(--text-3); margin-left: -6px; }
 
-/* ---------- Delete photo buttons ---------- */
-.log-thumb-wrap { position: relative; }
+/* Round done dot: brand with a check, or an empty muted ring */
+.log-dot {
+  width: 24px; height: 24px; border-radius: var(--radius-full); flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 2px solid var(--border-strong); background: var(--surface);
+}
+.log-dot.on { background: var(--brand); border-color: var(--brand); color: var(--on-ink); }
+.log-dot.on .icon { stroke-width: 3; }
+
+.log-pts {
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-end;
+  min-width: 140px; background: var(--surface-2);
+}
+.log-pts b {
+  font-size: 40px; font-weight: 800; line-height: 1; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums; color: var(--text);
+}
+.log-pts span { font-size: 12px; color: var(--text-3); margin-top: 4px; }
+
+/* ---------- Streak calendar (Trophy streak-calendar, week view) ---------- */
+.log-streak {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  padding: 16px 20px; border-top: 1px solid var(--border);
+}
+.log-streak-count { font-size: 16px; font-weight: 600; color: var(--text); }
+.log-streak-count b { font-weight: 800; font-variant-numeric: tabular-nums; }
+.log-streak-text .muted { font-size: 12px; margin-top: 2px; }
+.log-week { display: grid; grid-template-columns: repeat(7, 32px); gap: 8px; }
+.log-day { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.log-day-box {
+  width: 32px; height: 32px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface-2); border: 1px solid var(--border);
+  color: var(--on-ink);
+  transition: background var(--fast), border-color var(--fast);
+}
+.log-day-box.on { background: var(--brand); border-color: var(--brand); }
+.log-day-box.on .icon { stroke-width: 3; }
+.log-day-box.today { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--brand-ring); }
+.log-day-letter { font-size: 12px; font-weight: 600; color: var(--text-3); }
+.log-day-letter.today { color: var(--text); font-weight: 800; }
+
+/* ---------- Tabs ---------- */
+.log-seg { margin-top: 8px; }
+
+/* ---------- WORKOUT: numbered steps in one card ---------- */
+.log-wcard { padding: 0; }
+.log-wcard > .card-header { padding: 20px 20px 0; margin-bottom: 4px; }
+.log-step { padding: 16px 20px; }
+.log-step + .log-step { border-top: 1px solid var(--border); }
+.log-step-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+.log-step-num {
+  width: 24px; height: 24px; border-radius: var(--radius-full); flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--ink); color: var(--on-ink);
+  font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums;
+}
+.log-step-title { font-size: 14px; font-weight: 700; line-height: 24px; }
+.log-step-sub { font-size: 13px; color: var(--text-3); }
+.log-step select { margin-bottom: 0; }
+
+/* Photo drop zone */
+.log-drop-zone {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  padding: 24px 16px; text-align: center; cursor: pointer;
+  border: 1.5px dashed var(--border-strong); border-radius: var(--radius);
+  background: var(--surface-2);
+  transition: border-color var(--fast), background var(--fast);
+}
+.log-drop-zone:hover, .log-drag .log-drop-zone { border-color: var(--brand); background: var(--brand-soft); }
+.log-drop-zone:focus-within { box-shadow: var(--ring); }
+.log-drop-icon {
+  width: 40px; height: 40px; border-radius: var(--radius-full); margin-bottom: 4px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface); border: 1px solid var(--border); color: var(--text-2);
+}
+.log-drop-zone:hover .log-drop-icon, .log-drag .log-drop-icon { color: var(--brand); border-color: var(--brand-ring); }
+.log-drop-title { font-size: 14px; font-weight: 700; color: var(--text); }
+.log-drop-sub { font-size: 13px; color: var(--text-3); }
+.log-drop-sm { padding: 20px 16px; }
+
+/* Photo preview with Remove in the corner */
+.log-photo-frame { position: relative; border-radius: var(--radius); overflow: hidden; }
+.log-drag .log-photo-frame { box-shadow: var(--ring); }
+.log-photo-pick { display: block; cursor: pointer; }
+.log-photo-img { display: block; width: 100%; max-height: 260px; object-fit: cover; background: var(--surface-2); }
 .log-photo-x {
-  position: absolute; top: 16px; right: 8px; border: none; cursor: pointer;
-  background: rgba(18,18,18,.85); color: #fff; padding: 6px 10px; font-size: 12px;
-  letter-spacing: 1px; font-family: inherit;
+  position: absolute; top: 8px; right: 8px;
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 32px; padding: 0 12px; border: none; border-radius: var(--radius-sm);
+  background: var(--scrim); color: var(--on-ink);
+  font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: background var(--fast);
 }
-.log-photo-x:hover { background: #ff4d4d; }
-.photo-grid .log-jphoto-x {
-  position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border: none;
-  background: rgba(18,18,18,.85); color: #fff; font-size: 11px; cursor: pointer; padding: 0;
-}
-.photo-grid .log-jphoto-x:hover { background: #ff4d4d; }
+.log-photo-x:hover { background: var(--danger); }
 
-/* USDA vs AI source tags on each AI item */
-.log-ai-grams { font-size: 12px; }
-.log-ai-src {
-  display: inline-block; font-size: 10px; font-weight: 700; line-height: 1;
-  padding: 2px 4px; border-radius: 2px; border: 1px solid var(--line);
-  color: var(--muted); vertical-align: middle; white-space: nowrap;
+.log-photo-status {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 8px; min-height: 20px; font-size: 13px; color: var(--text-3);
 }
-.log-ai-src.log-ai-usda { color: var(--green); border-color: var(--green); cursor: help; }
-.log-ai-usda-line { font-size: 12px; margin: 2px 0 4px; }
+.log-photo-status:empty { margin-top: 0; min-height: 0; }
+.log-photo-status.log-ok { color: var(--success); font-weight: 600; }
+.log-photo-status.log-bad { color: var(--danger); font-weight: 600; }
+
+/* Event option cards (real checkboxes, radio-card look) */
+.log-opts { display: flex; flex-direction: column; gap: 8px; }
+.log-opt {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; cursor: pointer;
+  border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface);
+  transition: border-color var(--fast), background var(--fast), box-shadow var(--fast);
+}
+.log-opt:hover { border-color: var(--border-strong); }
+.log-opt:has(input:checked) { border-color: var(--brand); background: var(--brand-soft); }
+.log-opt:has(input:focus-visible) { box-shadow: var(--ring); }
+.log-opt .check { padding: 0; }
+.log-opt-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.log-opt-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.log-opt-sub { font-size: 13px; color: var(--text-3); }
+.log-opt-mult { background: var(--surface-2); color: var(--text-2); font-variant-numeric: tabular-nums; }
+.log-opt:has(input:checked) .log-opt-mult { background: var(--brand); color: var(--on-ink); }
+
+/* Sticky summary bar at the bottom of the workout card */
+.log-summary {
+  position: sticky; bottom: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 16px 20px; border-top: 1px solid var(--border);
+  background: var(--surface); border-radius: 0 0 var(--radius) var(--radius);
+}
+.log-summary-text { font-size: 14px; color: var(--text-2); min-width: 0; }
+.log-summary-text b { font-size: 20px; font-weight: 800; color: var(--text); font-variant-numeric: tabular-nums; }
+.log-summary-why { color: var(--text-3); }
+.log-summary .btn { flex-shrink: 0; }
+
+/* ---------- EATING ---------- */
+.log-eat { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+.log-eat-side { position: sticky; top: 24px; }
+.log-eat-main > .card:last-child, .log-eat-side > .card { margin-bottom: 0; }
+
+/* Meal tracker (primary card) */
+.log-ai-card { padding: 20px; }
+.log-ai-row { display: flex; gap: 8px; align-items: center; }
+.log-ai-row input { flex: 1; margin-bottom: 0; }
+.log-ai-photo { flex-shrink: 0; width: 40px; padding: 0; cursor: pointer; }
+.log-ai-photo.log-ai-has { border-color: var(--brand); color: var(--brand); background: var(--brand-soft); }
+.log-ai-row .btn-primary { flex-shrink: 0; }
+.log-ai-file { display: flex; align-items: center; gap: 4px; font-size: 13px; color: var(--text-3); margin-top: 8px; }
+
+.log-ai-result { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+.log-ai-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
+.log-ai-head-title {
+  font-size: 12px; font-weight: 700; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.log-ai-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.log-ai-table th {
+  font-size: 12px; font-weight: 600; color: var(--text-3); text-align: left;
+  padding: 8px 8px; border-bottom: 1px solid var(--border);
+}
+.log-ai-table td { padding: 8px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.log-ai-table th:first-child, .log-ai-table td:first-child { padding-left: 0; }
+.log-ai-table th:last-child, .log-ai-table td:last-child { padding-right: 0; }
+.log-ai-table .num { text-align: right; font-variant-numeric: tabular-nums; width: 48px; white-space: nowrap; }
+.log-ai-table td.num { color: var(--text-2); }
+.log-ai-name { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.log-ai-table tfoot td { font-weight: 800; color: var(--text); border-bottom: none; padding-top: 12px; }
+.log-ai-src { height: 18px; padding: 0 6px; font-size: 11px; border-radius: 4px; }
+.log-ai-usda { cursor: help; }
+.log-ai-meta { font-size: 13px; color: var(--text-3); margin-top: 8px; }
+.log-ai-actions { display: flex; gap: 8px; margin-top: 16px; }
+
+/* Quick add + today's food list */
+.log-quick { display: flex; gap: 8px; }
+.log-quick select { flex: 1; margin-bottom: 0; }
+.log-food-list { list-style: none; padding: 0; margin: 12px 0 0; }
+.log-food-list li {
+  display: flex; align-items: center; gap: 12px;
+  min-height: 48px; padding: 8px 0; border-top: 1px solid var(--border); font-size: 14px;
+}
+.log-food-name { flex: 1; min-width: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.log-food-macros { font-size: 13px; color: var(--text-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.log-food-empty { font-size: 13px; color: var(--text-3); margin: 16px 0 0; }
+.log-x {
+  width: 32px; height: 32px; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid transparent; border-radius: var(--radius-sm); background: transparent;
+  color: var(--text-3); cursor: pointer;
+  transition: color var(--fast), background var(--fast);
+}
+.log-x:hover { color: var(--danger); background: var(--danger-soft); }
+.log-x:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Macro bars */
+.log-macro + .log-macro { margin-top: 16px; }
+.log-macro-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; }
+.log-macro-name { font-weight: 600; color: var(--text-2); }
+.log-macro-num { display: inline-flex; align-items: center; gap: 4px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+.log-macro-num b { font-size: 16px; font-weight: 800; color: var(--text); }
+.log-macro.hit .log-macro-num, .log-macro.hit .log-macro-num b { color: var(--success); }
+.log-macro .bar { margin-top: 8px; }
+/* Neutral until hit, then green. Keeps orange for the one thing that matters. */
+.log-macro .bar > div { background: var(--text); }
+.log-macro .bar.full > div { background: var(--success); }
+
+/* Goals, collapsed behind a button */
+.log-goals { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); }
+.log-goals summary { list-style: none; margin: 0; width: fit-content; color: var(--text-2); }
+.log-goals summary::-webkit-details-marker { display: none; }
+.log-goals[open] summary { color: var(--text); background: var(--surface-2); }
+.log-goals-body { margin-top: 12px; }
+.log-goals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.log-goals-grid label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--text-3); font-weight: 600; }
+.log-goals-grid input { margin-bottom: 0; font-variant-numeric: tabular-nums; }
+.log-goals-body .btn { margin-top: 12px; }
+
+/* ---------- WELLNESS ---------- */
+.log-well { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.log-well > .card { margin-bottom: 0; }
+.log-well .card-title .icon { color: var(--text-2); }
+
+/* Journal grid */
+.log-jgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 16px; }
+.log-jitem { position: relative; border-radius: var(--radius-sm); overflow: hidden; background: var(--surface-2); }
+.log-jitem img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.log-jdate {
+  position: absolute; left: 4px; bottom: 4px; padding: 0 4px; border-radius: 4px;
+  font-size: 11px; font-weight: 600; color: var(--on-ink); background: var(--scrim);
+  font-variant-numeric: tabular-nums;
+}
+.log-jphoto-x {
+  position: absolute; top: 4px; right: 4px; width: 24px; height: 24px; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: none; border-radius: var(--radius-full); background: var(--scrim); color: var(--on-ink);
+  cursor: pointer; opacity: 0; transition: opacity var(--fast), background var(--fast);
+}
+.log-jitem:hover .log-jphoto-x, .log-jphoto-x:focus-visible { opacity: 1; }
+.log-jphoto-x:hover { background: var(--danger); }
+@media (hover: none) { .log-jphoto-x { opacity: 1; } }
+
+/* Meditation length picker */
+.log-med-label { font-size: 12px; font-weight: 600; color: var(--text-3); margin-bottom: 8px; }
+.log-med-seg { display: flex; width: 100%; margin-bottom: 0; }
+.log-med-seg button { flex: 1; justify-content: center; font-variant-numeric: tabular-nums; }
+.log-med-seg button:hover { background: var(--surface); color: var(--text); box-shadow: var(--shadow-sm); }
+
+/* ---------- Meditation lock overlay: calm, white ---------- */
+#medOverlay { background: var(--surface); }
+.log-med { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.log-med-kicker {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 24px;
+  font-size: 12px; font-weight: 700; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.log-med-ring { position: relative; width: 280px; height: 280px; display: flex; align-items: center; justify-content: center; }
+.log-med-ring svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.log-med-track { fill: none; stroke: var(--surface-2); stroke-width: 2; }
+.log-med-progress {
+  fill: none; stroke: var(--brand); stroke-width: 2; stroke-linecap: round;
+  stroke-dasharray: 100; stroke-dashoffset: 0;
+  animation-name: logMedDrain; animation-timing-function: linear; animation-fill-mode: forwards;
+}
+@keyframes logMedDrain { to { stroke-dashoffset: 100; } }
+.log-med-breathe {
+  position: absolute; width: 200px; height: 200px; margin: 0;
+  background: var(--brand-soft); border: none;
+}
+#medOverlay .med-time {
+  position: relative; font-size: 64px; font-weight: 800; color: var(--text);
+  letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+}
+.log-med-hint { font-size: 14px; color: var(--text-2); margin: 24px 0 0; }
+.log-med-warn { color: var(--text-3); font-size: 13px; margin-top: 4px; }
+.log-med-quit { margin-top: 24px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .log-med-breathe { animation: none; }
+}
+
+/* ---------- Smaller screens ---------- */
+@media (max-width: 1000px) {
+  .log-eat { grid-template-columns: 1fr; }
+  .log-eat-side { position: static; }
+}
+@media (max-width: 760px) {
+  .log-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .log-stat:nth-child(3) { border-left: none; }
+  .log-stat:nth-child(n + 3) { border-top: 1px solid var(--border); }
+  .log-pts { grid-column: 1 / -1; border-left: none; border-top: 1px solid var(--border); flex-direction: row; align-items: baseline; justify-content: flex-start; gap: 8px; }
+  .log-pts b { font-size: 32px; }
+  .log-well { grid-template-columns: 1fr; }
+  .log-summary { flex-wrap: wrap; }
+  .log-ai-row { flex-wrap: wrap; }
+}

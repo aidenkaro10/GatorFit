@@ -86,13 +86,13 @@ window.PP = window.PP || {};
       meal = {
         items: picked.map((f) => ({ name: f.name, protein_g: f.p, carbs_g: f.c, fat_g: f.f })),
         confidence: "medium",
-        note: "Quick guess from our food list, AI is offline right now",
+        note: "Matched from our food list",
       };
     } else {
       meal = {
         items: [{ name: String(text || "").trim().slice(0, 60) || "Your meal", protein_g: 30, carbs_g: 50, fat_g: 15 }],
         confidence: "low",
-        note: "Rough guess, AI is offline right now",
+        note: "Rough estimate for a typical plate",
       };
     }
     return { ok: true, meal: fixTotals(meal), offline: true, error: null };

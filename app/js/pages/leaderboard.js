@@ -220,6 +220,7 @@ PP.pages = PP.pages || {};
     const start = performance.now();
     const dur = 500;
     const targets = Array.from(els).map((el) => ({ el, to: Number(el.dataset.count) || 0 }));
+    targets.forEach(({ el, to }) => { el.textContent = String(Math.min(from, to)); }); // start low, no flash of the final number
     const step = (now) => {
       const t = Math.min(1, (now - start) / dur);
       const ease = 1 - Math.pow(1 - t, 3); // ease out
