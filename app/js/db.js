@@ -179,7 +179,12 @@ window.PP = window.PP || {};
       if (isNetwork(err)) return fail(MSG.network);
       if (code === "23514" || code === "22P02") {
         if (table === "point_logs") return fail(MSG.badPoints);
-        if (table === "profiles") return fail(MSG.badName);
+        if (table === "profiles") {
+          // Say which field the database rejected, so the message is actually useful
+          if (/greek_house/i.test(msg)) return fail("That house isn't set up yet. Pick another one or choose no house for now.");
+          if (/goal/i.test(msg)) return fail(MSG.badGoals);
+          return fail(MSG.badName);
+        }
         if (table === "partner_sessions") return fail(MSG.badSession);
         if (table === "meal_entries") return fail(MSG.badMeal);
       }
